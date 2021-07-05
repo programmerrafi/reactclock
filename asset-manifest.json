@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/reactclock/static/css/main.f66ff40b.chunk.css",
+    "main.js": "/reactclock/static/js/main.377bb932.chunk.js",
+    "main.js.map": "/reactclock/static/js/main.377bb932.chunk.js.map",
+    "runtime-main.js": "/reactclock/static/js/runtime-main.54fccd32.js",
+    "runtime-main.js.map": "/reactclock/static/js/runtime-main.54fccd32.js.map",
+    "static/js/2.a867009a.chunk.js": "/reactclock/static/js/2.a867009a.chunk.js",
+    "static/js/2.a867009a.chunk.js.map": "/reactclock/static/js/2.a867009a.chunk.js.map",
+    "index.html": "/reactclock/index.html",
+    "static/css/main.f66ff40b.chunk.css.map": "/reactclock/static/css/main.f66ff40b.chunk.css.map",
+    "static/js/2.a867009a.chunk.js.LICENSE.txt": "/reactclock/static/js/2.a867009a.chunk.js.LICENSE.txt",
+    "static/media/music.cdee8fa3.mp3": "/reactclock/static/media/music.cdee8fa3.mp3"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.54fccd32.js",
+    "static/js/2.a867009a.chunk.js",
+    "static/css/main.f66ff40b.chunk.css",
+    "static/js/main.377bb932.chunk.js"
+  ]
+}
