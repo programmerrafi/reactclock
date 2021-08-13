@@ -25,7 +25,7 @@ const MasterAlram = (props) => {
       amPm = "AM";
     }
     if (hrs1 === 0) {
-      hrs1 = 1;
+      hrs1 = 0;
     }
     if (amPm === "AM" && hrs1 <= 12) {
       let timeBd = hoursAM[hrs1];
