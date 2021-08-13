@@ -128,7 +128,7 @@ export const optionMin = mint.map((item, index) => {
   return <option key={index}>{item}</option>;
 });
 // hours
-let hrs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+let hrs = [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 export const optionHrs = hrs.map((item, index) => {
   return <option key={index}>{item}</option>;
 });
