@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MasterAlram from "./MasterAlram";
 import HeaderAlram from "./HeaderAlram";
 import AddIcon from "@material-ui/icons/Add";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import Footer from "./Footer";
 import { option, optionM, optionAM, optionMin, optionHrs } from "./LoopCom";
+
+// get Localstroage Data
+const getLocalData = () => {
+  const lists = localStorage.getItem("addalarm");
+
+  if (lists) {
+    return JSON.parse(lists);
+  } else {
+    return [];
+  }
+};
 
 const MasterAlrmMain = () => {
   const [inputv, setInputv] = useState({
@@ -16,7 +27,7 @@ const MasterAlrmMain = () => {
     label: "",
   });
   // console.log(inputv);
-  const [hrs, setHrs] = useState([]);
+  const [hrs, setHrs] = useState(getLocalData());
   const [editItem, setEditItem] = useState(null);
   const [toggle, setToggle] = useState(true);
   const [headTog, setHeadTog] = useState(true);
@@ -100,6 +111,11 @@ const MasterAlrmMain = () => {
   const save = <span onClick={showSaveBtn}>Save</span>;
   const cancel = <span onClick={cancelBtn}>Cancel</span>;
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  // add Localstroage
+  useEffect(() => {
+    localStorage.setItem("addalarm", JSON.stringify(hrs));
+  }, [hrs]);
 
   return (
     <>
