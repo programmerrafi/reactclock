@@ -9,6 +9,8 @@ const MasterDis = ({
   deleteData,
   id,
   editTog,
+  onOff,
+  handleOnOff,
 }) => {
   return (
     <>
@@ -21,16 +23,12 @@ const MasterDis = ({
                 onClick={() => deleteData(id)}
               ></i>
             </div>
-            {/* <div className="icon_edit" title="edit">
-              <i className="fas fa-edit" onClick={() => editData(id)}></i>
-            </div> */}
           </div>
         )}
 
         <div className="deadline_info">
-          <div className="alarm_tune">
-            <h4 className="giveaway">{giveaway}</h4>
-          </div>
+          {giveaway}
+
           <div className="deadline_inner">
             <div className="deadline-format">
               <div>
@@ -57,6 +55,14 @@ const MasterDis = ({
               </div>
             </div>
           </div>
+          {/* swtich btn start */}
+          <div
+            className={`button_mobile ${onOff ? "" : "bg"}`}
+            onClick={handleOnOff}
+          >
+            <span className={`switch ${onOff ? "slide" : ""}`}></span>
+          </div>
+          {/* swtich btn end */}
         </div>
         {/* <hr /> */}
       </div>
