@@ -185,6 +185,7 @@
   display: flex;
   justify-content: space-between;
   color: #b8bbbe;
+  align-items: center;
 }
 .deadline_info > .alarm_tune {
   margin: 0px 5px;
@@ -197,17 +198,146 @@
   text-align: center;
   font-size: 18px;
 }
+.button_mobile {
+  position: relative;
+  width: 45px;
+  height: 25px;
+  border: 2px solid rgb(68, 68, 68);
+  background-color: transparent;
+  display: flex;
+  overflow: hidden;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+}
+.button_mobile > .switch {
+  position: absolute;
+  width: 50%;
+  height: 97%;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border-radius: 50%;
+  margin: 0;
+  display: block;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  transition: all 0.6s;
+  -webkit-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  -ms-transition: all 0.6s;
+  -o-transition: all 0.6s;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+}
+.slide {
+  left: 0 !important;
+}
+.bg {
+  background-color: green;
+  border: 2px solid green;
+}
+.text_white {
+  color: #f1eeee;
+}
+.text_yellow {
+  color: #eb9523 !important;
+}
+.alarm_tune {
+  display: block;
+}
+.alarm_tune1 {
+  display: none;
+}
 @media only screen and (max-width: 540px) {
-  .alarm_tune > .giveaway > p {
-    text-align: start;
-    font-size: 16px;
+  .alarm_main {
+    height: 100vh;
   }
-  .alarm_tune > .giveaway {
-    font-size: 16px;
+  .alarm_tune {
+    display: none;
   }
-  .icon_control {
-    display: flex;
+  .alarm_tune1 {
+    display: block;
+  }
+  .alarm_tune1 h4 p span {
+    font-size: 30px;
+    font-weight: 400;
+  }
+  .alarm_tune1 h4 p span .am {
+    font-size: 17px;
+  }
+  .alarm_tune1 h4 > span {
+    font-size: 12px;
+    font-weight: 400;
+    color: #c07718;
+  }
+  .button_mobile {
+    width: 41px;
+    height: 23px;
+  }
+  .deadline-format span {
+    font-size: 10px !important;
+    font-weight: 700;
+  }
+  .deadline-format h4 {
+    font-size: 12px !important;
+    margin-bottom: -4px;
+    font-weight: 700;
+  }
+  .deadline_inner > .deadline-format {
+    display: unset !important;
+    width: 34px !important;
+  }
+  .deadline {
+    padding: 8px 12px;
     align-items: center;
+  }
+  .watch {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 20px;
+  }
+  .outer-circle {
+    width: 232px !important;
+    height: 232px !important;
+  }
+  .inner-circle {
+    width: 215px !important;
+    height: 215px !important;
+  }
+  .text {
+    font-size: 35px !important;
+  }
+  .button_laps {
+    width: 230px !important;
+  }
+  .button-wrapper {
+    margin-top: 20px !important;
+  }
+  .laps {
+    margin-top: 10px !important;
+  }
+  .lap-lear-button {
+    top: 82% !important;
+    transform: translate(-50%) !important;
+    -webkit-transform: translate(-50%) !important;
+    -moz-transform: translate(-50%) !important;
+    -ms-transform: translate(-50%) !important;
+    -o-transform: translate(-50%) !important;
+    width: 95px !important;
+    padding: 8px 0 !important;
+  }
+  .massage h2 {
+    font-size: 20px;
   }
 }
 .alarm_tune > .giveaway span {
