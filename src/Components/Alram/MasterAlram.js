@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { months, weekdays, hoursAM, hoursPM } from "./DayMonth";
 import MasterTune from "./MasterTune";
 import MasterDis from "./MasterDis";
@@ -9,8 +9,8 @@ const MasterAlram = (props) => {
   const [timerMinute, setTimerMinute] = useState("");
   const [timerSec, setTimerSec] = useState("");
   const [timerClose, setTimerClose] = useState(false);
-
-  let interval = useRef();
+  const [isRunning, setIsRunning] = useState(true);
+  const [onOff, setOnOff] = useState(false);
 
   // props value
   let hrs1 = Number(props.item1.hours);
@@ -20,7 +20,7 @@ const MasterAlram = (props) => {
   let gMonth = props.item1.month;
 
   // Calculating Hours AMpm
-  const getHors = () => {
+  let getHors = () => {
     if (amPm === "") {
       amPm = "AM";
     }
@@ -41,17 +41,25 @@ const MasterAlram = (props) => {
   // >>>>>>>>>>>>>>>>>>>
 
   // Calculatinf Date
-  const getDte = () => {
+  let getDte = () => {
+    // 1st condition
+    // nowTime.getHours() >= Number(getHors()) &&
+    //   (nowTime.getDate() === Number(gtdate) || Number(gtdate) === 0)
+    const nowTime = new Date();
+    if (
+      nowTime.getHours() >= Number(getHors()) &&
+      (nowTime.getDate() === Number(gtdate) || Number(gtdate) === 0) &&
+      (nowTime.getHours() === Number(getHors())
+        ? nowTime.getMinutes() > mint
+        : nowTime.getHours() >= Number(getHors()))
+    ) {
+      const getD1 = new Date().getDate();
+      return getD1 + 1;
+    }
     if (gtdate === "Days" || gtdate === "") {
       const getD = new Date().getDate();
       return getD;
-    }
-    //  else if (new Date().getHours() > hrs1) {
-    //   const cdt = new Date().getDate();
-    //   console.log(cdt);
-    //   return cdt + 1;
-    // }
-    else {
+    } else {
       return Number(gtdate);
     }
   };
@@ -59,7 +67,7 @@ const MasterAlram = (props) => {
   // >>>>>>>>>>>>>>>>>>>
 
   // Calculatinf Month
-  const getMon = () => {
+  let getMon = () => {
     if (gMonth === "Months" || gMonth === "") {
       const bMon = new Date().getMonth();
       return bMon;
@@ -77,17 +85,17 @@ const MasterAlram = (props) => {
   // >>>>>>>>>>>>>>>>>>>
 
   // Get Manual Future Date setting
-  const bYear = new Date().getFullYear();
-  const bsec = new Date().getSeconds();
+  let bYear = new Date().getFullYear();
 
   // new Date(year, month, day, hours, minutes, seconds, milliseconds)
-  let futureDate = new Date(bYear, getMon(), cDate, mainHars, mint, bsec);
+  let futureDate = new Date(bYear, getMon(), cDate, mainHars, mint, 0);
 
-  const year = futureDate.getFullYear();
-  const hours = futureDate.getHours();
-  // console.log(hours);
-  const minutes = futureDate.getMinutes();
-  const date = futureDate.getDate();
+  // >>>>>>> For alarm message giveway start >>>>>>>>
+  let year = futureDate.getFullYear();
+  let hours = futureDate.getHours();
+  let minutes = futureDate.getMinutes();
+  // console.log(minutes);
+  let date = futureDate.getDate();
 
   let month = futureDate.getMonth();
   month = months[month];
@@ -98,7 +106,7 @@ const MasterAlram = (props) => {
   // >>>>>>>>>>>>>>>>>>>
 
   // Add before 0 minutes and hours
-  const upHours = (hours) => {
+  let upHours = (hours) => {
     let timeHours = [
       "00",
       "01",
@@ -127,7 +135,7 @@ const MasterAlram = (props) => {
     ];
     return timeHours[hours];
   };
-  const upMinutes = (minutes) => {
+  let upMinutes = (minutes) => {
     if (minutes < 10) {
       let timeMinutes = [
         "00",
@@ -149,93 +157,120 @@ const MasterAlram = (props) => {
   };
   // >>>>>>>>>>>>>>>>>>>
 
-  const giveaway = (
+  let giveaway = (
     <>
-      Ends on{" "}
-      <span>
-        {weekday}, {date} {month} {year}
-      </span>
-      <p>
-        {" "}
-        Time:{" "}
-        <span>
-          {upHours(hours)}:{upMinutes(minutes)} {amPm}
-        </span>
-      </p>
+      <div className="alarm_tune">
+        <h4 className={`giveaway ${onOff ? "" : "text_white"}`}>
+          Ends on{" "}
+          <span className={`${onOff ? "" : "text_yellow"}`}>
+            {weekday}, {date} {month} {year}
+          </span>
+          <p>
+            {" "}
+            Time:{" "}
+            <span className={`${onOff ? "" : "text_yellow"}`}>
+              {upHours(hours)}:{upMinutes(minutes)} {amPm}
+            </span>
+          </p>
+        </h4>
+      </div>
+
+      <div className="alarm_tune1">
+        <h4>
+          <p>
+            <span className={`${onOff ? "" : "text_white"}`}>
+              {upHours(hours)}:{upMinutes(minutes)}
+              <span className="am">{amPm}</span>
+            </span>
+          </p>
+          <span className={`${onOff ? "" : "text_yellow"}`}>
+            {weekday}, {date} {month} {year}
+          </span>
+        </h4>
+      </div>
     </>
   );
+  // >>>>>>> For alarm message giveway End >>>>>>>>
 
-  // Time Start maching using Iterval
-  const startTimer = () => {
+  let futureTime = futureDate.getTime();
+
+  let startTimer = useCallback(() => {
     //future time in ms
-    const futureTime = futureDate.getTime();
-    // console.log(futureTime);
+    let today = new Date().getTime();
+    let t = futureTime - today;
 
-    interval = setInterval(() => {
-      const today = new Date().getTime();
-      let t = futureTime - today;
-      //   console.log(t);
+    // values in ms
+    const oneDay = 24 * 60 * 60 * 1000;
+    const onewHour = 60 * 60 * 1000;
+    const oneMinute = 60 * 1000;
 
-      // values in ms
-      const oneDay = 24 * 60 * 60 * 1000;
-      const onewHour = 60 * 60 * 1000;
-      const oneMinute = 60 * 1000;
+    // calculate all values
+    const days = Math.floor(t / oneDay);
+    const hours = Math.floor((t % oneDay) / onewHour);
+    const minutes = Math.floor((t % onewHour) / oneMinute);
+    const seconds = Math.floor((t % oneMinute) / 1000);
 
-      // calculate all values
-      let days = Math.floor(t / oneDay);
-      let hours = Math.floor((t % oneDay) / onewHour);
-      let minutes = Math.floor((t % onewHour) / oneMinute);
-      let seconds = Math.floor((t % oneMinute) / 1000);
-
-      if (t < 1000) {
-        clearInterval(interval);
-        if (Math.sign(t) === 1) {
-          //   console.log("hy");
-          setTimerClose(true);
-        }
-      } else {
-        setTimerClose(false);
-        setTimerDay(days);
-        setTimerHour(hours);
-        setTimerMinute(minutes);
-        setTimerSec(seconds);
+    if (t < 1000) {
+      if (Math.sign(t) === 1) {
+        setTimerClose(true);
       }
-    }, 1000);
-  };
-  // setInterv(setInterval(startTimer, 1000));
+    } else {
+      setTimerClose(false);
+      setTimerDay(days);
+      setTimerHour(hours);
+      setTimerMinute(minutes);
+      setTimerSec(seconds);
+    }
+  }, [futureTime]);
 
   useEffect(() => {
-    startTimer();
-    // return () => {
-    //   clearInterval(interval.current);
-    // };
-  }, []);
+    if (isRunning) {
+      const id = window.setInterval(() => {
+        startTimer();
+      }, 1000);
+      return () => window.clearInterval(id);
+    }
+    return undefined;
+  }, [isRunning, startTimer]);
+
+  //  start and stop
+  const handleOnOff = () => {
+    if (onOff === false) {
+      setOnOff(true);
+      setIsRunning(false);
+    } else {
+      setOnOff(false);
+      setIsRunning(true);
+    }
+  };
 
   return (
     <>
       {timerClose ? (
-        <>
-          <MasterTune
-            giveaway={giveaway}
-            id={props.id}
-            deleteData={props.deleteData}
-            label={props.item1.label}
-          />
-        </>
+        <MasterTune
+          giveaway={giveaway}
+          id={props.id}
+          deleteData={props.deleteData}
+          label={props.item1.label}
+          audiPlay={props.audiPlay}
+          onOff={onOff}
+          handleOnOff={handleOnOff}
+          editTog={props.editTog}
+        />
       ) : (
-        <>
-          <MasterDis
-            giveaway={giveaway}
-            timerDay={timerDay}
-            timerHour={timerHour}
-            timerMinute={timerMinute}
-            timerSec={timerSec}
-            deleteData={props.deleteData}
-            editData={props.editData}
-            id={props.id}
-            editTog={props.editTog}
-          />
-        </>
+        <MasterDis
+          giveaway={giveaway}
+          timerDay={timerDay}
+          timerHour={timerHour}
+          timerMinute={timerMinute}
+          timerSec={timerSec}
+          deleteData={props.deleteData}
+          editData={props.editData}
+          id={props.id}
+          editTog={props.editTog}
+          onOff={onOff}
+          handleOnOff={handleOnOff}
+        />
       )}
     </>
   );
