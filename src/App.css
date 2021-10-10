@@ -184,7 +184,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  color: #b8bbbe;
+  color: #8a8e91;
   align-items: center;
 }
 .deadline_info > .alarm_tune {
@@ -294,6 +294,7 @@
   .deadline_inner > .deadline-format {
     display: unset !important;
     width: 34px !important;
+    padding: 2px 0 !important;
   }
   .deadline {
     padding: 8px 12px;
@@ -341,7 +342,7 @@
   }
 }
 .alarm_tune > .giveaway span {
-  color: #c07718;
+  color: #a56615;
 }
 .deadline_inner > .deadline-format {
   width: 50px;
